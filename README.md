@@ -7,11 +7,11 @@ An advanced electronic signature (AdES) is an electronic signature that has met 
 The main document describing the format is ETSI TS 101 733 Electronic Signature and Infrastructure (ESI) – CMS Advanced Electronic Signature (CAdES).
 
 
-## Cades RSA Signature Suite
+## CAdES Signature Suite
 
 Following [Linking Data Proofs document](https://w3c-ccg.github.io/ld-proofs/), the following proof types have been defined and will be supported by the SSI eIDAS Bridge:
 
-2020 CAdES RSA Signature Suite
+2020 CAdES Signature Suite using RSA signatures:
 ```JSON
 {
   "id": "https://xxx/v1#CAdESRSASignature2020",
