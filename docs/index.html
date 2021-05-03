@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Replace me with a real title</title>
+    <title>CMS advanced digital signatures for Linked Data</title>
     <script
       src="https://www.w3.org/Tools/respec/respec-w3c"
       class="remove"
@@ -20,63 +20,144 @@
       };
     </script>
   </head>
+ 
   <body>
+    
     <section id="abstract">
       <p>This is required.</p>
     </section>
+    
     <section id="sotd">
       <p>This is required.</p>
     </section>
+    
     <section class="informative">
       <h2>Introduction</h2>
-      <p>Some informative introductory text.</p>
-      <aside class="note" title="A useful note">
-        <p>I'm a note!</p>
-      </aside>
+      <p>
+        This suite is intended to provide Advanced Digital (AdES) RSA signature support to Linked Data.
+      </p>
+      <p>
+        An advanced electronic signature (AdES) is an electronic signature that has met the requirements 
+        set forth under EU Regulation No 910/2014 (eIDAS-regulation) on electronic identification and trust
+        services for electronic transactions in the European Single Market.
+      </p>
+      <p>The main document describing the format is ETSI TS 101 733 Electronic Signature and Infrastructure 
+        (ESI) – CMS Advanced Electronic Signature (CAdES).
+      </p>
     </section>
+    
     <section>
-      <h2>A section</h2>
-      <aside class="example">
-        <p>This is an example.</p>
-        <pre class="js">
-        // Automatic syntax highlighting
-        function someJavaScript(){}
-        </pre>
-      </aside>
-      <section>
-        <h3>I'm a sub-section</h3>
-        <p class="issue" data-number="121">
-          <!-- Issue can automatically be populated from GitHub -->
-        </p>
-      </section>
-    </section>
-    <section data-dfn-for="Foo">
-      <h2>Start your spec!</h2>
-      <pre class="idl">
-        [Exposed=Window]
-        interface Foo {
-        attribute DOMString bar;
-        undefined doTheFoo();
-        };
-      </pre>
-      <p>The <dfn>Foo</dfn> interface represents a {{Foo}}.</p>
+      <h2>Terminology</h2>
       <p>
-        The <dfn>doTheFoo()</dfn> method does the foo. Call it by running
-        {{Foo/doTheFoo()}}.
+        The following terms are used to describe concepts involved in the generation 
+        and verification of the Cades RSA 2020 <a>signature suite</a>.
       </p>
-      <ol class="algorithm">
-        <li>A |variable:DOMString| can be declared like this.</li>
-      </ol>
+
+      <dl>
+        <dt><dfn>signature suite</dfn></dt>
+        <dd>
+          A specified set of cryptographic primitives typically consisting of
+          a canonicalization algorithm, a message digest algorithm, and a signature
+          algorithm that are bundled together by cryptographers for developers
+          for the purposes of safety and convenience.
+        </dd>
+        <dt><dfn>canonicalization algorithm</dfn></dt>
+        <dd>
+          An algorithm that takes an input document that has more than one possible
+          representation and always transforms it into a canonical form. This process is
+          sometimes also called normalization.
+        </dd>
+        <dt><dfn>message digest algorithm</dfn></dt>
+        <dd>
+          An algorithm that takes an input message and produces a cryptographic
+          output message that is often many orders of magnitude smaller than the
+          input message. These algorithms are often 1) very fast, 2)
+          non-reversible, 3) cause the output to change significantly when even one
+          bit of the input message changes, and 4) make it infeasible to find two
+          different inputs for the same output.
+        </dd>
+        <dt><dfn>signature algorithm</dfn></dt>
+        <dd>
+          An algorithm that takes an input message and produces an output value where the
+          receiver of the message can mathematically verify that the message has not
+          been modified in transit and came from someone possessing a particular secret.
+        </dd>
+      </dl>
+
     </section>
-    <section id="conformance">
+
+    <section>
+      <h2>The CAdES RSA Signature Suite</h2>
+
       <p>
-        This is required for specifications that contain normative material.
+        The CAdES RSA <a>signature suite</a> MUST be used in
+        conjunction with the signing and verification algorithms in the
+        Linked Data Signatures [[LD-SIGNATURES]] specification. The suite consists of
+        the following algorithms:
+      </p>
+
+      <table class="simple">
+        <thead>
+          <th>Parameter</th>
+          <th>Value</th>
+          <th>Specification</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>canonicalizationAlgorithm</td>
+            <td>https://w3id.org/security#URDNA2015</td>
+            <td>[[RDF-DATASET-NORMALIZATION]]</td>
+          </tr>
+          <tr>
+            <td>digestAlgorithm</td>
+            <td>https://tools.ietf.org/html/rfc5754</td>
+            <td>[[RFC5754]]</td>
+          </tr>
+          <tr>
+            <td>signatureAlgorithm</td>
+            <td>https://tools.ietf.org/html/rfc5126</td>
+            <td>[[RFC5126]]</td>
+          </tr>
+        </tbody>
+      </table>
+
+    <section>
+      <h2>Modification to Algorithms</h2>
+      <p>
+        No modifications to the Linked Data Signature algorithms are provided other
+        than the algorithms specified in the previous signature suite section.
       </p>
     </section>
+
+    <section>
+      <h2>Security Considerations</h2>
+      <p>The following section describes security considerations that developers
+        implementing this specification should be aware of in order to create secure
+        software.
+      </p>
+
+      <div class="issue">TODO: We need to add a complete list of security
+      considerations.</div>
+    </section>
+
+
     <section class="appendix">
-      <h2>Change log</h2>
-      <p>Recent changes to this specification from GitHub:</p>
-      <rs-changelog from="some-git-tag"> </rs-changelog>
+      <h2>Examples</h2>
+      <p>A simple example of an CAdES RSA 2020 signature:
+      </p>
+
+      <pre class="example highlight">
+        {
+          "proof": {
+            "type": "CAdESRSASignature2020",
+            "proofPurpose": "assertionMethod",
+            "created": "2019-08-23T20:21:34Z",
+            "verificationMethod": "did:factom:5d0dd58757119dd437c70d92b44fbf86627ee275f0f2146c3d99e441da342d9f#MIIEEzCCAvugAwIBAgIUJ0hTJswF5BBreQgbEQL8FTLXwHAwDQYJKoZIhvcNAQELBQAwgZgxCzAJBgNVBAYTAk5MMRYwFAYDVQQIDA1Ob29yZC1Ib2xsYW5kMRIwEAYDVQQHDAlBbXN0ZXJkYW0xFDASBgNVBAoMC1Rlc3RDb21wYW55MQswCQYDVQQLDAJJVDEVMBMGA1UEAwwMU2NvdHQgTWFsbGV5MSMwIQYJKoZIhvcNAQkBFhRzbWFsbGV5QHNwaGVyZW9uLmNvbTAeFw0yMDEyMDIxNDMxMDVaFw0zMDExMzAxNDMxMDVaMIGYMQswCQYDVQQGEwJOTDEWMBQGA1UECAwNTm9vcmQtSG9sbGFuZDESMBAGA1UEBwwJQW1zdGVyZGFtMRQwEgYDVQQKDAtUZXN0Q29tcGFueTELMAkGA1UECwwCSVQxFTATBgNVBAMMDFNjb3R0IE1hbGxleTEjMCEGCSqGSIb3DQEJARYUc21hbGxleUBzcGhlcmVvbi5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDkZfqj459pkdt5GLelamSySQP3owkyYOXW1NLTLr3dC_RzE8x3SRpHQwaRErm0VYvV35JVvubGZgatm5SNsTUHw7Ywrwy-hGFCXo2JOabL0lj3EpkpRPpVS7GXAlMxTvfZihw8IgmA3ZEnhnCYbyfKiCAOmVGLc_dViFTUuk2O6t6gkAdL0MhzU6nCBBariqlwWQxXf7z-nFubBrBio2l_GL6Pf6orvB_67V2PQEYnYlf24VtfdV34_QcU3T9bQjN2RhSzT9HYrYZtEXEmS4ARaN4mSoCnkITNsrGUz3LpX0ozxk2kQCUe89v8TUd-uYzA_sHXJXa7oHqTA1ZJVrtDAgMBAAGjUzBRMB0GA1UdDgQWBBT2b43zVAuqVWwFIZLSTSOdI3n5IDAfBgNVHSMEGDAWgBT2b43zVAuqVWwFIZLSTSOdI3n5IDAPBgNVHRMBAf8EBTADAQH_MA0GCSqGSIb3DQEBCwUAA4IBAQBnKynE3w04FyEHpYJs94eYrvKAgH6lvavHlDbiZxq1YgPwQN7lbFKIyZxsfcx1QGu1Rk_e-B7D-peIYGtL0-lQxbC88ogh03CaPqrJEhhmSxLEN-L3HQl-pItVUTKH8kaxHeC86ym2pOEJW2y7mVtPYkrgMiTjmOJj60hJEQE87VT_TB_soAXOm8oVXy1Ha3HwHZ4vouG_SwYhXWaqnOUDOifR579Cy53sMkuG0m7SuXxOZp20jnX7TaR8ElH8mZifTSBjkT2RNj1QhFG-Tl5nR_Q63j4xIw9f2Sj-jVclsuIcEQh00bo8pfdMhA-sMX1zCsOvG3sDnsfsqLmL7guV",
+            "proofValue": "-----BEGIN PKCS7----- iG9w0BCRABCaB0MHICAQAwDQYLK... -----END PKCS7-----"
+        }
+
+      </pre>
     </section>
+
   </body>
 </html>
